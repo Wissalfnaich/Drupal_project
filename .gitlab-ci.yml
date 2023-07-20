@@ -1,0 +1,33 @@
+# .gitlab-ci.yml
+
+# Spécifie la version de la syntaxe GitLab CI/CD
+version: '3'
+
+# Définit les étapes de la pipeline CI/CD
+stages:
+  - build
+  - test
+  - deploy
+
+# Configuration des jobs pour chaque étape
+build:
+  stage: build
+  script:
+    - docker build -t REGISTRE_DOCKER/mon_projet_drupal .
+    - docker login -u VOTRE_UTILISATEUR -p VOTRE_MOT_DE_PASSE REGISTRE_DOCKER
+    - docker push REGISTRE_DOCKER/mon_projet_drupal
+
+test:
+  stage: test
+  script:
+    - docker run --rm REGISTRE_DOCKER/mon_projet_drupal phpunit --configuration /path/to/phpunit.xml
+
+deploy:
+  stage: deploy
+  script:
+    # Connectez-vous à votre cluster OpenShift ici
+    - oc login --server=https://votre-cluster-openshift --username=votre-username --password=votre-password
+    # Assurez-vous que vous êtes dans le bon projet OpenShift où vous souhaitez déployer le projet Drupal
+    - oc project votre-projet-openshift
+    # Déploiement du conteneur Drupal sur OpenShift à partir de l'image Docker construite précédemment
+    - oc apply -f path/to/openshift/deployment.yaml
