@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-projet-drupal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mon-projet-drupal
+  template:
+    metadata:
+      labels:
+        app: mon-projet-drupal
+    spec:
+      containers:
+        - name: mon-projet-drupal
+          image: REGISTRE_DOCKER/mon_projet_drupal:latest
+          ports:
+            - containerPort: 80
+          env:
+            # Définir ici les variables d'environnement spécifiques à votre projet Drupal
+            - name: DB_HOST
+              value: "mariadb"
+            - name: DB_USER
+              value: "votre_utilisateur"
+            - name: DB_PASSWORD
+              value: "votre_mot_de_passe"
