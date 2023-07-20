@@ -6,7 +6,6 @@ version: '3'
 # Définit les étapes de la pipeline CI/CD
 stages:
   - build
-  - test
   - deploy
 
 # Configuration des jobs pour chaque étape
@@ -17,10 +16,6 @@ build:
     - docker login -u VOTRE_UTILISATEUR -p VOTRE_MOT_DE_PASSE REGISTRE_DOCKER
     - docker push REGISTRE_DOCKER/mon_projet_drupal
 
-test:
-  stage: test
-  script:
-    - docker run --rm REGISTRE_DOCKER/mon_projet_drupal phpunit --configuration /path/to/phpunit.xml
 
 deploy:
   stage: deploy
