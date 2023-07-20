@@ -20,8 +20,8 @@ spec:
           env:
             # Définir ici les variables d'environnement spécifiques à votre projet Drupal
             - name: DB_HOST
-              value: "mariadb"
+              value: "localhost"
             - name: DB_USER
-              value: "votre_utilisateur"
+              value: "root"
             - name: DB_PASSWORD
-              value: "votre_mot_de_passe"
+              value: ""
